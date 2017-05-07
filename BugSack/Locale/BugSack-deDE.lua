@@ -1,3 +1,5 @@
+-- deDE translation by Gamefaq
+
 local L = AceLibrary("AceLocale-2.0"):new("BugSack")
 
 L:RegisterTranslations("deDE", function()
@@ -30,8 +32,10 @@ L:RegisterTranslations("deDE", function()
 
 		["Auto popup"] = "Auto aufspringen",
 		["Toggle auto BugSack frame popup."] = "Schaltet das automatische einblenden des Fehler Fensters ein/aus.",
-		["Auto chat output"] = "Auto Chat Ausgabe",
-		["Toggle auto printing of messages to the chat frame."] = "Schaltet das automatische einblenen der Fehlertexte im Chatfenster ein/aus.",
+		["Chatframe output"] = "Chatfenster Ausgabe",
+		["Print a warning to the chat frame when an error occurs."] = "Schreibe eine Wahrnung ins Chatfenster wenn ein Fehler auftritt.",
+		["Errors to chatframe"] = "Fehler im Chatfenster",
+		["Print the full error message to the chat frame instead of just a warning."] = "Schreibe die gesamte Fehler Nachricht in das Chatfenster anstelle nur einer Warnung.",
 		["Mute"] = "Stumm",
 		["Toggle an audible warning everytime an error occurs."] = "Schaltet den Audiosound bei Fehlern ein/aus.",
 		["Save errors"] = "Fehler speichern",
@@ -71,3 +75,11 @@ L:RegisterTranslations("deDE", function()
 		["Click to open the BugSack frame with the last error."] = "Klicken zum \195\182ffnen des BugSack Fensters mit dem letzten Fehler.",
 	}
 end)
+
+if ( GetLocale() == "deDE" ) then
+	-- XML buttons
+	BugSackNextButton:SetText("Next")
+	BugSackLastButton:SetText("Last")
+	BugSackPrevButton:SetText("Previous")
+	BugSackFirstButton:SetText("First")
+end

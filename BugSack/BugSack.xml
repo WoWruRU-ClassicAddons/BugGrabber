@@ -3,6 +3,10 @@
 <!--
   $Id: BugSack.xml 6162 2006-07-30 00:37:07Z fritti $
   -->
+<Script file="Locale\BugSack-enUS.lua"/>
+<Script file="Locale\BugSack-ruRU.lua"/>
+<Script file="Locale\BugSack-deDE.lua"/>
+<Script file="Locale\BugSack-zhCN.lua"/>
 
 <Frame name="BugSackFrame" parent="UIParent" inherits="DialogBoxFrame">
 	<Backdrop name="$parentBackdrop" bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
@@ -60,10 +64,10 @@
 			</ScrollChild>
 		</ScrollFrame>
 		<Button name="BugSackPrevButton" inherits="UIPanelButtonTemplate" text="Previous">
-			<Size> <AbsDimension x="64" y="24" /> </Size>
+			<Size> <AbsDimension x="85" y="24" /> </Size>
 			<Anchors>
 				<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
-					<Offset> <AbsDimension x="20" y="20" /> </Offset>
+					<Offset> <AbsDimension x="10" y="20" /> </Offset>
 				</Anchor>
 			</Anchors>
 			<Scripts>
@@ -71,10 +75,10 @@
 			</Scripts>
 		</Button>
 		<Button name="BugSackNextButton" inherits="UIPanelButtonTemplate" text="Next">
-			<Size> <AbsDimension x="64" y="24" /> </Size>
+			<Size> <AbsDimension x="85" y="24" /> </Size>
 			<Anchors>
 				<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
-					<Offset> <AbsDimension x="90" y="20" /> </Offset>
+					<Offset> <AbsDimension x="100" y="20" /> </Offset>
 				</Anchor>
 			</Anchors>
 			<Scripts>
@@ -82,10 +86,10 @@
 			</Scripts>
 		</Button>
 		<Button name="BugSackLastButton" inherits="UIPanelButtonTemplate" text="Last">
-			<Size> <AbsDimension x="64" y="24" /> </Size>
+			<Size> <AbsDimension x="85" y="24" /> </Size>
 			<Anchors>
 				<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
-					<Offset> <AbsDimension x="-20" y="20" /> </Offset>
+					<Offset> <AbsDimension x="-10" y="20" /> </Offset>
 				</Anchor>
 			</Anchors>
 			<Scripts>
@@ -93,10 +97,10 @@
 			</Scripts>
 		</Button>
 		<Button name="BugSackFirstButton" inherits="UIPanelButtonTemplate" text="First">
-			<Size> <AbsDimension x="64" y="24" /> </Size>
+			<Size> <AbsDimension x="85" y="24" /> </Size>
 			<Anchors>
 				<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
-					<Offset> <AbsDimension x="-90" y="20" /> </Offset>
+					<Offset> <AbsDimension x="-100" y="20" /> </Offset>
 				</Anchor>
 			</Anchors>
 			<Scripts>

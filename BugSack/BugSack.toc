@@ -1,25 +1,21 @@
-## Interface: 11100
+## Interface: 11200
 ## Title: BugSack  |cff7fff7f -Ace2-|r
-## Version: 2.0.$Revision: 6326 $
-## Author: The BugSack Team
+## Version: 2.0.$Revision: 12403 $
 ## Notes: Toss those bugs inna sack.
+## Notes-ruRU: Сбрасывает ошибки в мешок.
+## Author: The BugSack Team
 ## SavedVariables: BugSackDB
-## RequiredDeps: !BugGrabber
-## OptionalDeps: FuBar, Ace2, DewdropLib, FuBarPlugin-2.0, TabletLib
+## RequiredDeps: !BugGrabber,
+## OptionalDeps: FuBar, DewdropLib, FuBarPlugin-2.0, TabletLib
+## X-Date: $Date: 2006-09-30
 ## X-Category: Development Tools
-Libs\AceLibrary\AceLibrary.lua
-Libs\AceOO\AceOO-2.0.lua
-Libs\AceEvent\AceEvent-2.0.lua
-Libs\AceDB\AceDB-2.0.lua
-Libs\AceConsole\AceConsole-2.0.lua
-Libs\AceAddon\AceAddon-2.0.lua
-Libs\AceLocale\AceLocale-2.0.lua
+## X-Commands: /bugsack, /bs, /bugsackcl, /bscl
+
+Locale\BugSack-enUS.lua
+Locale\BugSack-ruRU.lua
+Locale\BugSack-deDE.lua
+Locale\BugSack-zhCN.lua
+
 BugSack.xml
-BugSack-enUS.lua
-BugSack-zhCN.lua
-BugSack-deDE.lua
 BugSack.lua
-Libs\Dewdrop\Dewdrop-2.0.lua
-Libs\Tablet\Tablet-2.0.lua
-Libs\FuBarPlugin\FuBarPlugin-2.0.lua
 BugSackFu.lua

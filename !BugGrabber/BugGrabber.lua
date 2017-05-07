@@ -1,6 +1,7 @@
 --
 -- $Id: BugGrabber.lua 6441 2006-08-01 09:38:54Z fritti $
 --
+local L = AceLibrary("AceLocale-2.0"):new("BugGrabber")
 
 -- Create our event registering frame
 local f = CreateFrame("Frame", "BugGrabber")
@@ -10,6 +11,11 @@ BugGrabber.loaded = false
 BugGrabber.loadErrors = {}
 BugGrabber.bugsackErrors = {}
 BugGrabber.errors = {}
+BugGrabber.previous = ""
+BugGrabber.repeats = 0
+BugGrabber.timeout = 30			-- timeout in secs for logging repeated events
+BugGrabber.timeoutStarted = false
+BugGrabber.lastUpdate = 0
 
 -- Our persistent error database
 BugGrabberDB = {}
@@ -29,18 +35,53 @@ function BugGrabber.GetDB()
 	return BugGrabberDB.errors
 end
 
+-- OnUpdate handler to ensure that repeats will be logged after a timeout
+function BugGrabber.CheckTimeout()
+	BugGrabber.lastUpdate = BugGrabber.lastUpdate + arg1
+
+	if (BugGrabber.lastUpdate > BugGrabber.timeout) then
+		BugGrabber.LogRepeats()
+	end
+end
+
+-- Log the nr of repeats and stop the timeout
+function BugGrabber.LogRepeats()
+	BugGrabber.SaveError(string.format(L["last message repeated %d times"], BugGrabber.repeats))
+	f:SetScript("OnUpdate", nil)
+	BugGrabber.repeats = 0
+	BugGrabber.timeoutStarted = false
+end
+
 -- Error handler
 function BugGrabber.GrabError(_, err)
 	-- Get the full backtrace
 	err = err .. "\n" .. debugstack(4)
 
-	-- Start with the date, time and session
-	local oe = {}
-	oe.session = BugGrabberDB.session
-	oe.time = date("%Y/%m/%d %H:%M:%S")
-	oe.message = ""
+	-- Check to see if this is a repeat
+	if err == BugGrabber.previous then
+		-- If the timeout is not started yet, start it now
+		if not BugGrabber.timeoutStarted then
+			BugGrabber.timeoutStarted = true
+			BugGrabber.lastUpdate = 0
+			f:SetScript("OnUpdate", BugGrabber.CheckTimeout)
+		end
+
+		-- Count the repeat, but don't do anything else
+		BugGrabber.repeats = BugGrabber.repeats + 1
+		return
+	end
+
+	-- Log the repeat count of the previous error if any
+	if BugGrabber.repeats > 0 then
+		BugGrabber.LogRepeats()
+	end
+
+	-- Save the exact error message for comparison later
+	BugGrabber.previous = err
+	BugGrabber.repeats = 0
 
 	-- Normalize the full paths into last directory component and filename.
+	local errmsg = ""
 	local looping = false
 	for trace in string.gfind(err, "(.-)\n") do
 		local match, found, path, file, line, msg
@@ -96,10 +137,19 @@ function BugGrabber.GrabError(_, err)
 		end
 
 		-- Add it to the formatted error
-		oe.message = oe.message .. path .. file .. line .. ":" .. msg .. "\n"
+		errmsg = errmsg .. path .. file .. line .. ":" .. msg .. "\n"
 	end
 
-	oe.message = "[" .. oe.time .. "-" .. oe.session .. "]: " .. oe.message .. "\n  ---"
+	-- Now store the error
+	BugGrabber.SaveError(errmsg)
+end
+
+function BugGrabber.SaveError(message)
+	-- Start with the date, time and session
+	local oe = {}
+	oe.session = BugGrabberDB.session
+	oe.time = date("%Y/%m/%d %H:%M:%S")
+	oe.message = "[" .. oe.time .. "-" .. oe.session .. "]: " .. message .. "\n  ---"
 
 	-- WoW crashes when strings > 983 characters are stored in the
 	-- SavedVariables file, so make sure we don't exceed that limit.
@@ -131,7 +181,7 @@ function BugGrabber.GrabError(_, err)
 		AceLibrary("AceEvent-2.0"):TriggerEvent("BugGrabber_BugGrabbed", oe)
 	else
 		if not BugGrabber.bugsackErrors then
-			DEFAULT_CHAT_FRAME:AddMessage("BugGrabber captured an error:\n" ..
+			DEFAULT_CHAT_FRAME:AddMessage(L["BugGrabber captured an error:\n"] ..
 			  oe.message)
 		end
 	end
