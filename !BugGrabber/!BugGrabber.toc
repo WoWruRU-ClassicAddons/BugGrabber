@@ -1,0 +1,6 @@
+## Interface: 11100
+## Title: BugGrabber
+## Author: The BugSack Team
+## Notes: Grabs bugs for the bug sack.
+## SavedVariables: BugGrabberDB
+BugGrabber.lua
